@@ -1,0 +1,185 @@
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+body {
+  font-family: "Krona One", sans-serif;
+}
+
+:root {
+  --playfield-size: 150px;
+  --playermarker-size: calc(var(--playfield-size) * 0.7);
+  --bgcolor: #09062e;
+  --boardcolor: #20196c;
+  --markercolor-x: #9ee2ff;
+  --markercolor-o: #edde6c;
+  --hovercolor: #5858e6;
+  --titlecolor: #09062e;
+  --sectionbgcolor: #0c0839;
+}
+
+#heading-section,
+#score-dashboard-container,
+#gamecontrols {
+  width: 100vw;
+  height: 10vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--sectionbgcolor);
+}
+
+#message-section {
+  width: 100vw;
+  height: 5vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#xscore,
+#oscore {
+  padding: 0px 10px;
+}
+
+#scoretitle {
+  display: block;
+}
+
+#score-dashboard-container {
+  width: 100vw;
+  height: 5vh;
+  background-color: var(--sectionbgcolor);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #ffffff;
+  font-size: 0.9em;
+}
+
+.gametitle {
+  color: var(--titlecolor);
+  font-size: 40px;
+  color: #ffffff;
+}
+
+.gameboard {
+  width: 100vw;
+  height: 70vh;
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  justify-content: center;
+  align-content: center;
+  justify-items: center;
+  align-items: center;
+  background-color: var(--bgcolor);
+}
+
+.playfield {
+  width: var(--playfield-size);
+  height: var(--playfield-size);
+  border: 1px solid white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+  box-shadow: 0 -1px 20px rgba(0, 0, 0, 0.7);
+  background-color: var(--boardcolor);
+}
+
+.playfield:first-child,
+.playfield:nth-child(2),
+.playfield:nth-child(3) {
+  border-top: none;
+}
+
+.playfield:nth-child(3n + 1) {
+  border-left: none;
+}
+
+.playfield:nth-child(3n + 3) {
+  border-right: none;
+}
+
+.playfield:last-child,
+.playfield:nth-child(8),
+.playfield:nth-child(7) {
+  border-bottom: none;
+}
+
+.playfield:hover {
+  background-color: var(--hovercolor);
+}
+
+.playfield.x-player,
+.playfield.o-player {
+  cursor: not-allowed;
+}
+
+.playfield.x-player::before,
+.playfield.x-player::after {
+  background-color: var(--markercolor-x);
+  border-radius: 4px;
+}
+
+.playfield.o-player::before {
+  background-color: var(--markercolor-o);
+}
+
+.gameboard.x-player .playfield:not(.x-player):not(.o-player):hover::before,
+.gameboard.x-player .playfield:not(.x-player):not(.o-player):hover::after,
+.gameboard.o-player .playfield:not(.x-player):not(.o-player):hover::before {
+  background-color: white;
+}
+
+.playfield.x-player::before,
+.playfield.x-player::after,
+.gameboard.x-player .playfield:not(.x-player):not(.o-player):hover::before,
+.gameboard.x-player .playfield:not(.x-player):not(.o-player):hover::after {
+  content: "";
+  position: absolute;
+  width: calc(var(--playermarker-size) * 0.15);
+  height: var(--playermarker-size);
+}
+
+.playfield.x-player::before,
+.gameboard.x-player .playfield:not(.x-player):not(.o-player):hover::before {
+  transform: rotate(45deg);
+}
+
+.playfield.x-player::after,
+.gameboard.x-player .playfield:not(.x-player):not(.o-player):hover::after {
+  transform: rotate(-45deg);
+}
+
+.playfield.o-player::before,
+.playfield.o-player::after,
+.gameboard.o-player .playfield:not(.x-player):not(.o-player):hover::before,
+.gameboard.o-player .playfield:not(.x-player):not(.o-player):hover::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+}
+
+.playfield.o-player::before,
+.gameboard.o-player .playfield:not(.x-player):not(.o-player):hover::before {
+  width: var(--playermarker-size);
+  height: var(--playermarker-size);
+}
+
+.playfield.o-player::after,
+.gameboard.o-player .playfield:not(.x-player):not(.o-player):hover::after {
+  width: calc(var(--playermarker-size) * 0.7);
+  height: calc(var(--playermarker-size) * 0.7);
+  background-color: var(--boardcolor);
+}
+
+#resetBtn {
+  width: 110px;
+  padding: 5px 20px;
+  justify-content: center;
+}
