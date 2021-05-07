@@ -2,6 +2,7 @@ const gameboard = document.getElementsByClassName("gameboard");
 const playfield = Array.from(document.getElementsByClassName("playfield"));
 const resetBtn = document.getElementById("resetBtn");
 let userMessage = document.querySelector(".usermessage");
+const popup = document.querySelector(".popup");
 let xCurrentScore = 0;
 let oCurrentScore = 0;
 let round = 1;
@@ -22,7 +23,8 @@ const winningCombinations = [
 
 const gameplaymusic = new Audio("./assets/audio/gameplay.mp3");
 
-gameplaymusic.play();
+gameplaymusic.loop = true;
+//gameplaymusic.play();
 
 // EVENT LISTENERS
 window.addEventListener("DOMContentLoaded", (e) => {
@@ -46,16 +48,35 @@ const resetGame = () => {
 
   for (let x = 0; x < playfield.length; x++) {
     playfield[x].classList.remove(playerX, playerO);
-    playfield[x].removeEventListener("click", fieldClicked);
     playfield[x].addEventListener("click", fieldClicked, {
       once: true,
     });
     playfield[x].className = "playfield";
     playfield[x].classList.add("animate__animated", "animate__wobble");
+    playfield[x].style.opacity = "100%";
   }
 
   winningFields[0].forEach((field) => {
-    playfield[field].style.backgroundColor = "#20196c";
+    playfield[field].style.backgroundColor = "#2c247d";
+  });
+
+  playfield.forEach((field) => {
+    field.style.cursor = "pointer";
+    if (!winningFields[0].includes(parseInt(field.id))) {
+      field.animate(
+        [
+          // keyframes
+          { opacity: "0" },
+          { opacity: "100" },
+        ],
+        {
+          // timing options
+          duration: 1000,
+          iterations: 1,
+        }
+      );
+      field.style.opacity = "100%";
+    }
   });
 
   winningFields.pop();
@@ -118,9 +139,15 @@ const isWinner = (currentPlayer, clickedfield) => {
           winningFields.push(possiblecombo[x]);
 
           winningFields[0].forEach((field) => {
-            playfield[field].style.backgroundColor = "#583ce6";
+            playfield[field].style.backgroundColor = "#30da7c";
           });
 
+          playfield.forEach((field) => {
+            field.removeEventListener("click", fieldClicked);
+            field.style.cursor = "not-allowed";
+          });
+
+          reduceLosingFieldOpacity();
           userMessage.innerText = currentPlayer + " wins the game!";
           userMessage.style.color = "green";
           winnersfx.play();
@@ -150,4 +177,12 @@ const resetScore = () => {
   document.getElementById("oscore").innerText = 0;
 };
 
-const animateWinningCells = () => {};
+const reduceLosingFieldOpacity = () => {
+  for (i = 0; i < winningFields.length; i++) {
+    for (y = 0; y < playfield.length; y++) {
+      if (!winningFields[i].includes(parseInt(playfield[y].id))) {
+        playfield[y].style.opacity = "20%";
+      }
+    }
+  }
+};

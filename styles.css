@@ -7,34 +7,18 @@
 
 body {
   font-family: "Krona One", sans-serif;
-
-  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-  background-size: 400% 400%;
-  animation: gradient 15s ease infinite;
-}
-
-@keyframes gradient {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
 }
 
 :root {
   --playfield-size: 150px;
   --playermarker-size: calc(var(--playfield-size) * 0.7);
-  --bgcolor: #09062e;
-  --boardcolor: #20196c;
+  --bgcolor: #1b0b48;
+  --boardcolor: #2c247d;
   --markercolor-x: #9ee2ff;
   --markercolor-o: #edde6c;
   --hovercolor: #5858e6;
   --titlecolor: #09062e;
-  --sectionbgcolor: #0c0839;
+  --sectionbgcolor: #100629;
 }
 
 #heading-section,
@@ -51,29 +35,29 @@ body {
 #message-section {
   width: 100vw;
   height: 5vh;
+  background: linear-gradient(-45deg, #ee7752, #f2d667, #23a6d5, #23d5ab);
+  background-size: 400% 400%;
   display: flex;
   justify-content: center;
   align-items: center;
+  animation: message-section-gradient 10s ease infinite;
+}
+
+@keyframes message-section-gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 #xscore,
 #oscore {
   padding: 0px 10px;
-}
-
-#scoretitle {
-  display: block;
-}
-
-#score-dashboard-container {
-  width: 100vw;
-  height: 5vh;
-  background-color: var(--sectionbgcolor);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #ffffff;
-  font-size: 0.9em;
 }
 
 .gametitle {
@@ -82,9 +66,42 @@ body {
   color: #ffffff;
 }
 
+#score-dashboard-container {
+  width: 100vw;
+  height: 10vh;
+  background-color: var(--sectionbgcolor);
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+#score-dashboard-container > div > p {
+  color: #ffffff;
+  font-size: 0.9em;
+}
+
+#scoretitle {
+  margin-bottom: 20px;
+}
+
+#scores ::after {
+  content: " | ";
+  display: inline;
+  height: 5px;
+  color: #ffffff;
+  opacity: 20%;
+  padding: 20px;
+}
+
+/* #scores > span::after:nth-child(1) {
+  display: none;
+} */
+
 .gameboard {
   width: 100vw;
-  height: 70vh;
+  height: 65vh;
   display: grid;
   grid-template-columns: repeat(3, auto);
   justify-content: center;
@@ -105,6 +122,22 @@ body {
   cursor: pointer;
   box-shadow: 0 -1px 20px rgba(0, 0, 0, 0.7);
   background-color: var(--boardcolor);
+}
+
+.playfield:first-child {
+  border-radius: 15px 0px 0px 0px;
+}
+
+.playfield:nth-child(3) {
+  border-radius: 0px 15px 0px 0px;
+}
+
+.playfield:nth-child(7) {
+  border-radius: 0px 0px 0px 15px;
+}
+
+.playfield:nth-child(9) {
+  border-radius: 0px 0px 15px 0px;
 }
 
 .playfield:first-child,
@@ -195,9 +228,12 @@ body {
 }
 
 #resetBtn {
-  width: 110px;
+  width: 150px;
+  height: 40px;
   padding: 5px 20px;
+  display: flex;
   justify-content: center;
-  border-radius: 20px;
+  align-items: center;
+  border-radius: 10px;
   cursor: pointer;
 }
